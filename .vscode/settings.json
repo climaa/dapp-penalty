@@ -5,6 +5,7 @@
         "clsx",
         "noopener",
         "noreferrer",
-        "tailwindcss"
+        "tailwindcss",
+        "testid"
     ]
 }
