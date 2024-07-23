@@ -43,10 +43,6 @@ Using testing library, to execute renders in right order and give the selectors 
 npm run e2e
 ```
 
-Helpful links
-
-- <https://github.com/badeball/cypress-cucumber-preprocessor/blob/master/examples/esbuild-cjs/cypress.config.js>
-
 ### Build the project  
 
 ```shell
@@ -60,3 +56,8 @@ The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+#### Helpful links
+
+- <https://github.com/badeball/cypress-cucumber-preprocessor/blob/master/examples/esbuild-cjs/cypress.config.js>
+- <https://tailwindcss.com/docs/guides/create-react-app>
