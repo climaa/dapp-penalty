@@ -1,3 +1,3 @@
 Feature: Login
     Scenario: Login with valid credentials
-        Given I open the login page
+        Given the system open the login page
