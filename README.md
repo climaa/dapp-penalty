@@ -60,4 +60,4 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 #### Helpful links
 
 - <https://github.com/badeball/cypress-cucumber-preprocessor/blob/master/examples/esbuild-cjs/cypress.config.js>
-- <https://tailwindcss.com/docs/guides/create-react-app>
+- <https://ui.shadcn.com/docs/installation/manual>
