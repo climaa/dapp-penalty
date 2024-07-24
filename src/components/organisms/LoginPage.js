@@ -27,7 +27,7 @@ function LoginPage() {
       return;
     }
   
-    if (user.at(0).password === password) {
+    if (user.length > 0 && user.at(0)?.password === password) {
       navigate('/');
       const obj = { id: user.at(0).id, isLoggedIn: true };
       sessionStorage.setItem('user', JSON.stringify(obj));

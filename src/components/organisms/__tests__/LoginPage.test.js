@@ -1,62 +1,119 @@
 import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
-
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import "@testing-library/jest-dom";
 import LoginPage from "../LoginPage";
+import { BrowserRouter } from "react-router-dom";
 
-// Mock the database module
-jest.mock("../../../assets/database/database", () => [
-  { user: "testUser", password: "testPass" },
-]);
+// Helper function to render LoginPage with router context
+function renderLoginPage() {
+  return render(
+    <BrowserRouter>
+      <LoginPage />
+    </BrowserRouter>
+  );
+}
 
-// Step 1: Mock useNavigate
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'), // Import and spread the actual module
-  useNavigate: () => jest.fn(), // Mock useNavigate with a jest function
-}));
-
-describe("LoginPage Component", () => {
-  test("renders the login form with inputs and button", () => {
-    render(<LoginPage />);
-    screen.getByText('Dapp Penalty Login');
-    expect(screen.getByTestId("login-username")).toBeInTheDocument();
-    expect(screen.getByTestId("login-password")).toBeInTheDocument();
-    expect(screen.getByTestId("submit-button")).toBeInTheDocument();
+describe("LoginPage", () => {
+  beforeEach(() => {
+    fetch.resetMocks();
   });
 
-  test("allows the user to enter username and password", () => {
-    render(<LoginPage />);
-    fireEvent.change(screen.getByTestId("login-username"), {
-      target: { value: "testUser" },
-    });
-    fireEvent.change(screen.getByTestId("login-password"), {
-      target: { value: "testPass" },
-    });
-    expect(screen.getByTestId("login-username").value).toBe("testUser");
-    expect(screen.getByTestId("login-password").value).toBe("testPass");
+  test("renders LoginPage component", () => {
+    renderLoginPage();
+    expect(screen.getByText(/dapp penalty login/i)).toBeInTheDocument();
   });
 
-  test("displays a success message with correct credentials", async () => {
-    render(<LoginPage />);
-    fireEvent.change(screen.getByTestId("login-username"), {
-      target: { value: "testUser" },
-    });
-    fireEvent.change(screen.getByTestId("login-password"), {
-      target: { value: "testPass" },
-    });
-    fireEvent.click(screen.getByTestId("submit-button"));
+  test("allows input fields to be changed", () => {
+    renderLoginPage();
+    const usernameInput = screen.getByTestId("login-username");
+    const passwordInput = screen.getByTestId("login-password");
+
+    fireEvent.change(usernameInput, { target: { value: "testuser" } });
+    fireEvent.change(passwordInput, { target: { value: "password" } });
+
+    expect(usernameInput.value).toBe("testuser");
+    expect(passwordInput.value).toBe("password");
   });
 
-  test("displays an error message with incorrect credentials", async () => {
-    render(<LoginPage />);
-    fireEvent.change(screen.getByTestId("login-username"), {
-      target: { value: "wrongUser" },
+  test("submits the form and calls fetch with correct data", async () => {
+    fetch.mockResponseOnce(
+      JSON.stringify([{ id: 1, username: "testuser", password: "password" }])
+    );
+
+    renderLoginPage();
+    const usernameInput = screen.getByTestId("login-username");
+    const passwordInput = screen.getByTestId("login-password");
+
+    fireEvent.change(usernameInput, { target: { value: "testuser" } });
+    fireEvent.change(passwordInput, { target: { value: "password" } });
+    
+    const submitButton = screen.getByTestId("submit-button");
+
+    fireEvent.click(submitButton);
+
+    await waitFor(() => {
+      expect(fetch).toHaveBeenCalledWith(
+        `http://localhost:3001/users?username=testuser`
+      );
     });
-    fireEvent.change(screen.getByTestId("login-password"), {
-      target: { value: "wrongPass" },
+  });
+
+  test("handles successful login", async () => {
+    fetch.mockResponseOnce(
+      JSON.stringify([{ id: 1, username: "testuser", password: "password" }])
+    );
+
+    renderLoginPage();
+    const usernameInput = screen.getByTestId("login-username");
+    const passwordInput = screen.getByTestId("login-password");
+
+    fireEvent.change(usernameInput, { target: { value: "testuser" } });
+    fireEvent.change(passwordInput, { target: { value: "password" } });
+    const submitButton = screen.getByTestId("submit-button");
+
+    fireEvent.click(submitButton);
+
+    await waitFor(() => {
+      expect(sessionStorage.getItem("user")).toEqual(
+        JSON.stringify({ id: 1, isLoggedIn: true })
+      );
     });
-    fireEvent.click(screen.getByTestId("submit-button"));
-    expect(
-      await screen.findByText("Invalid username or password.")
-    ).toBeInTheDocument();
+  });
+
+  test("displays error on failed login", async () => {
+    fetch.mockResponseOnce(JSON.stringify([])); // Mock no user found
+
+    renderLoginPage();
+    const submitButton = screen.getByTestId("submit-button");
+
+    fireEvent.click(submitButton);
+
+    await waitFor(() => {
+      expect(screen.getByTestId("login-status")).toHaveTextContent(
+        "Invalid username or password."
+      );
+    });
+  });
+
+  test("displays error on fetch failure", async () => {
+    jest.spyOn(console, 'error').mockImplementation(() => {});
+    fetch.mockReject(() => Promise.reject("API is down"));
+
+    renderLoginPage();
+    const usernameInput = screen.getByTestId("login-username");
+    const passwordInput = screen.getByTestId("login-password");
+
+    fireEvent.change(usernameInput, { target: { value: "testuser" } });
+    fireEvent.change(passwordInput, { target: { value: "password" } });
+    const submitButton = screen.getByTestId("submit-button");
+
+    fireEvent.click(submitButton);
+
+    await waitFor(() => {
+      expect(screen.getByTestId("login-status")).toHaveTextContent(
+        "Failed to fetch user data."
+      );
+    });
+    console.error.mockRestore();
   });
 });
