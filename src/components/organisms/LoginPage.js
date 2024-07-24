@@ -3,7 +3,6 @@
  */
 import React, { useState } from "react";
 import { Input, Button } from "../atoms";
-import database from "../../assets/database/database";
 import { useNavigate } from 'react-router-dom';
 
 function LoginPage() {
@@ -12,14 +11,25 @@ function LoginPage() {
   const [loginStatus, setLoginStatus] = useState('');
   const navigate = useNavigate();
 
-  const validateLogin = (e) => {
-    e.preventDefault(); // Nitpick: Prevent form from actually submitting
-
-    const user = database.find((user) => user.user === username && user.password === password);
-
-    if (user) {
-      navigate('/')
-      const obj = { user: user.user, isLoggedIn: true };
+  const validateLogin = async (e) => {
+    e.preventDefault(); // Prevent form from actually submitting
+    
+    let user = null;
+    try {
+      const response = await fetch(`http://localhost:3001/users?username=${username}`);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      user = await response.json();
+    } catch (error) {
+      console.error('There was a problem with the fetch operation:', error);
+      setLoginStatus('Failed to fetch user data.');
+      return;
+    }
+  
+    if (user.at(0).password === password) {
+      navigate('/');
+      const obj = { id: user.at(0).id, isLoggedIn: true };
       sessionStorage.setItem('user', JSON.stringify(obj));
     } else {
       setLoginStatus('Invalid username or password.');

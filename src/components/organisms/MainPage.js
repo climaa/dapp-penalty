@@ -5,13 +5,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import useAuth from "../../utils/hooks/useAuth"; 
-import { TopNavigationMenu } from "../molecules";
+import { TopNavigationMenu, TableSection } from "../molecules";
+
 
 function MainPage() {
   useAuth();
 
   return (
-    <div className="flex h-screen bg-gradient-to-tr from-gray-300 via-gray-400 to-gray-500" data-testid="main">
+    <div className="flex h-screen bg-gradient-to-tr from-gray-100 via-gray-200 to-gray-300" data-testid="main">
     {/* sidebar */}
     <div className="hidden md:flex flex-col w-64 bg-gray-800" data-testid="sidebar">
         <div className="flex items-center justify-center h-16 bg-gray-900">
@@ -53,6 +54,7 @@ function MainPage() {
         <div className="p-4">
             <h1 className="text-2xl font-bold">Welcome to your dashboard!</h1>
             <p className="mt-2 text-gray-600">This is an example dashboard using Tailwind CSS.</p>
+            <TableSection />
         </div>
       </div>
     </div>
