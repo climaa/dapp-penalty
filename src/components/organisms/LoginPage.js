@@ -4,11 +4,13 @@
 import React, { useState } from "react";
 import { Input, Button } from "../atoms";
 import database from "../../assets/database/database";
+import { useNavigate } from 'react-router-dom';
 
 function LoginPage() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [loginStatus, setLoginStatus] = useState('');
+  const navigate = useNavigate();
 
   const validateLogin = (e) => {
     e.preventDefault(); // Nitpick: Prevent form from actually submitting
@@ -16,8 +18,9 @@ function LoginPage() {
     const user = database.find((user) => user.user === username && user.password === password);
 
     if (user) {
-      setLoginStatus('Login successful!');
-      // TODO: Redirect or change state as needed
+      navigate('/')
+      const obj = { user: user.user, isLoggedIn: true };
+      sessionStorage.setItem('user', JSON.stringify(obj));
     } else {
       setLoginStatus('Invalid username or password.');
     }

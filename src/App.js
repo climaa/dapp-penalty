@@ -4,8 +4,6 @@ import LoginPage from './components/organisms/LoginPage.js';
 import MainPage from './components/organisms/MainPage.js';
 import './utils/functions/utils.js'
 
-import './App.css';
-
 function App() {
   return (
     <Router>
