@@ -76,6 +76,7 @@ function CardTransactionSection() {
           <SelectGroup>
             <SelectItem value="pending">pending</SelectItem>
             <SelectItem value="approved">approved</SelectItem>
+            <SelectItem value="declined">declined</SelectItem>
             <SelectItem value="completed">completed</SelectItem>
           </SelectGroup>
         </SelectContent>

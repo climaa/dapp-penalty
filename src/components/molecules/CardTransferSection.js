@@ -25,7 +25,7 @@ const defaultFormValues = {
 };
 
 function CardSection() {
-  const user = JSON.parse(sessionStorage.getItem('user'));
+  const user = JSON.parse(sessionStorage.getItem("user"));
   const [formValues, setFormValues] = useState(defaultFormValues);
   const [users, setUsers] = useState([]);
   const { transfers, setTransfer } = useTransfer();
@@ -54,9 +54,9 @@ function CardSection() {
   function CustomSelect({ label, name }) {
     return (
       <Select
-        onValueChange={(value) =>
-          setFormValues((values) => ({ ...values, [name]: value }))
-        }
+        onValueChange={(value) => {
+          setFormValues((values) => ({ ...values, [name]: value }));
+        }}
         value={formValues[name]}
       >
         <SelectTrigger className="w-[180px]">
@@ -92,12 +92,12 @@ function CardSection() {
         },
         body: JSON.stringify(formValues),
       });
-  
+
       if (!response.ok) {
         // TODO: Error boundary
         throw new Error(`Error: ${response.statusText}`);
       }
-  
+
       await response.json();
       setFormValues(defaultFormValues);
       setTransfer({});
