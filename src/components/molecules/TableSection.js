@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ArrowRightIcon } from '@radix-ui/react-icons'
+import { ArrowRightIcon } from "@radix-ui/react-icons";
 import {
   Card,
   CardContent,
@@ -9,39 +9,23 @@ import {
   Table,
   TableBody,
   TableCell,
+  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
 } from "../atoms";
 import { useTransfer } from "../../utils/context/transfersContext";
 
-function CardSection({ children }) {
-  return (
-    <Card x-chunk="dashboard-05-chunk-3">
-      <CardHeader className="px-7">
-        <CardTitle>A list of your recent balances.</CardTitle>
-        <CardDescription>Select from the table area token</CardDescription>
-        <CardContent className="p-0">{children}</CardContent>
-      </CardHeader>
-    </Card>
-  );
-}
-
 function TableSection() {
-  const [balance, setBalance] = useState([]);
+  const [pool, setPool] = useState([]);
   const { setTransfer } = useTransfer();
 
   useEffect(() => {
-    const user = JSON.parse(sessionStorage.getItem("user"));
-    const userId = user.id;
-
     async function callAPI() {
-      const response = await fetch(
-        `http://localhost:3001/balance?id=${userId}`
-      );
+      const response = await fetch(`http://localhost:3001/pool?_limit=10`);
       const data = await response.json();
 
-      setBalance(data);
+      setPool(data);
     }
 
     callAPI();
@@ -58,18 +42,35 @@ function TableSection() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {balance.map(({ token, amount }) => (
-            <TableRow>
+          {pool.map(({ token, amount }) => (
+            <TableRow key={token}>
               <TableCell className="font-medium">{token}</TableCell>
               <TableCell className="text-right">{amount}</TableCell>
               <TableCell className="text-right">
-                <ArrowRightIcon onClick={() => setTransfer({ selectedToken: token })}/>
+                <ArrowRightIcon
+                  onClick={() => setTransfer({ selectedToken: token, amount })}
+                />
               </TableCell>
             </TableRow>
           ))}
         </TableBody>
+        <TableFooter>
+          <p className="mt-3">Total rows {pool.length}</p>
+        </TableFooter>
       </Table>
     </CardSection>
+  );
+}
+
+function CardSection({ children }) {
+  return (
+    <Card x-chunk="dashboard-05-chunk-3">
+      <CardHeader className="px-7">
+        <CardTitle>A list of your recent balances.</CardTitle>
+        <CardDescription>Select from the table area token</CardDescription>
+        <CardContent className="p-0">{children}</CardContent>
+      </CardHeader>
+    </Card>
   );
 }
 

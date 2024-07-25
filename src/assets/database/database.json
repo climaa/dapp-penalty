@@ -1,63 +1,89 @@
 {
   "users": [
-    { "id": 1, "username": "user1", "password": "asdf" },
-    { "id": 2, "username": "user2", "password": "oneMillionDollars" }
-  ],
-  "balance": [
     {
       "id": 1,
+      "username": "user1",
+      "password": "asdf"
+    },
+    {
+      "id": 2,
+      "username": "user2",
+      "password": "oneMillionDollars"
+    }
+  ],
+  "pool": [
+    {
       "token": "1de062ce-677d-4e35-9929-f8e96fe5109a",
       "amount": 1124
     },
     {
-      "id": 1,
       "token": "a6bbffbd-355a-4795-9f3a-c224da4bbd23",
       "amount": 1528
     },
     {
-      "id": 1,
       "token": "fd8a6d2b-6ebf-4a76-8d1f-919cd56ffd22",
       "amount": 1523
     },
     {
-      "id": 1,
       "token": "7ff66ec2-32d2-4472-90d8-357a9eef742d",
       "amount": 1934
     },
     {
-      "id": 1,
       "token": "31099149-83dc-435d-8140-8ebf39069e6f",
       "amount": 1365
     },
     {
-      "id": 1,
       "token": "6addca87-a2f1-4a8d-80ce-728e588265aa",
       "amount": 1734
     },
     {
-      "id": 1,
       "token": "d41388fd-b47b-445c-9134-5b3d95afa0a0",
       "amount": 1543
     },
     {
-      "id": 1,
       "token": "4d58cd3e-5130-4bdb-9d32-b26f7fcbc9c6",
       "amount": 1973
     },
     {
-      "id": 1,
       "token": "440e1dc3-d665-4866-bdc0-ed45b843c65c",
       "amount": 1725
     },
-    { "id": 1, "token": "72bb5f81-1a1a-4ffc-9c69-e240d2b29f35", "amount": 1258 }
+    {
+      "token": "72bb5f81-1a1a-4ffc-9c69-e240d2b29f35",
+      "amount": 1258
+    },
+    {
+      "token": "354b2fcd-3cd8-4ec2-a4d9-9c1140578cd4",
+      "amount": 1893
+    },
+    {
+      "token": "f1b1b3b4-3b1b-4b3b-9b1b-1b3b1b3b1b3b",
+      "amount": 1234
+    },
+    {
+      "token": "151b9133-d9fe-433d-b53b-470728af3d15",
+      "amount": 1234
+    },
+    {
+      "token": "19cacf03-d924-4d23-8e41-83ef3e9facc8",
+      "amount": 1234
+    }
   ],
   "transactions": [
     {
-      "id": 1,
-      "to": 2,
-      "token": "1de062ce-677d-4e35-9929-f8e96fe5109",
+      "amount": 100,
+      "receipt": "user2",
+      "sender": "user1",
       "status": "pending",
-      "amount": 100
+      "token": "1de062ce-677d-4e35-9929-f8e96fe5109"
+    },
+    {
+      "id": "403b",
+      "amount": 1528,
+      "receipt": "user2",
+      "sender": "user1",
+      "status": "pending",
+      "token": "a6bbffbd-355a-4795-9f3a-c224da4bbd23"
     }
   ]
 }
