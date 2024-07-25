@@ -29,7 +29,7 @@ function LoginPage() {
   
     if (user.length > 0 && user.at(0)?.password === password) {
       navigate('/');
-      const obj = { id: user.at(0).id, isLoggedIn: true };
+      const obj = { id: user.at(0).id, isLoggedIn: true, username: user.at(0).username };
       sessionStorage.setItem('user', JSON.stringify(obj));
     } else {
       setLoginStatus('Invalid username or password.');

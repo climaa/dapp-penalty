@@ -71,19 +71,13 @@
   ],
   "transactions": [
     {
-      "amount": 100,
+      "id": "72cc",
+      "amount": "1119",
       "receipt": "user2",
       "sender": "user1",
       "status": "pending",
-      "token": "1de062ce-677d-4e35-9929-f8e96fe5109"
-    },
-    {
-      "id": "403b",
-      "amount": 1528,
-      "receipt": "user2",
-      "sender": "user1",
-      "status": "pending",
-      "token": "a6bbffbd-355a-4795-9f3a-c224da4bbd23"
+      "token": "1de062ce-677d-4e35-9929-f8e96fe5109a",
+      "createdBy": "user1"
     }
   ]
 }

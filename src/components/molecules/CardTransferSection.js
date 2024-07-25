@@ -25,6 +25,7 @@ const defaultFormValues = {
 };
 
 function CardSection() {
+  const user = JSON.parse(sessionStorage.getItem('user'));
   const [formValues, setFormValues] = useState(defaultFormValues);
   const [users, setUsers] = useState([]);
   const { transfers, setTransfer } = useTransfer();
@@ -45,8 +46,9 @@ function CardSection() {
       ...values,
       amount: transfers.amount,
       token: transfers.selectedToken,
+      createdBy: user.username,
     }));
-  }, [transfers]);
+  }, [transfers, user.username]);
 
   // https://www.radix-ui.com/primitives/docs/components/select
   function CustomSelect({ label, name }) {

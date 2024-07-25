@@ -55,8 +55,10 @@ function TableSection() {
           ))}
         </TableBody>
         <TableFooter>
-          <p className="mt-3">Total rows {pool.length}</p>
-        </TableFooter>
+            <TableRow>
+              <TableCell className="mt-3">Total rows {pool.length}</TableCell>
+            </TableRow>
+          </TableFooter>
       </Table>
     </CardSection>
   );

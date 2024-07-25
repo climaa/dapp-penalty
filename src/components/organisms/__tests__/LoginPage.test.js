@@ -75,7 +75,7 @@ describe("LoginPage", () => {
 
     await waitFor(() => {
       expect(sessionStorage.getItem("user")).toEqual(
-        JSON.stringify({ id: 1, isLoggedIn: true })
+        JSON.stringify({ id: 1, isLoggedIn: true, username: "testuser" })
       );
     });
   });

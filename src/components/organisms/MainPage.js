@@ -9,6 +9,7 @@ import {
   TopNavigationMenu,
   TableSection,
   CardTransferSection,
+  CardTransactionSection,
 } from "../molecules";
 import Transfers from "../../utils/context/transfersContext";
 
@@ -90,11 +91,16 @@ function MainPage() {
             This is an example dashboard using Tailwind CSS.
           </p>
 
-          <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8 lg:grid-cols-3 xl:grid-cols-2 mt-10">
-            <Transfers>
+          <main>
+          <Transfers>
+            <div className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8 lg:grid-cols-3 xl:grid-cols-2 mt-10">
               <TableSection />
               <CardTransferSection />
-            </Transfers>
+            </div>
+            <div className="grid flex-1 items-start gap-4 p-4">
+              <CardTransactionSection />
+            </div>
+          </Transfers>
           </main>
         </div>
       </div>
